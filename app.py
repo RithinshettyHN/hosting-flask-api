@@ -4,8 +4,12 @@ import io
 
 app = Flask(__name__)
 
+@app.route('/')
+def hello_world():
+    return 'Hello World'
+
 # Define the endpoint to receive images
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/predict', methods=['POST', 'GET'])
 def receive_image():
     if request.method == 'POST':
         try:
@@ -36,4 +40,3 @@ def receive_image():
                 return send_file(io.BytesIO(image_file.read()), mimetype='image/jpeg')
         except Exception as e:
             return jsonify({'error': f'Failed to retrieve image: {str(e)}'}), 500
-
