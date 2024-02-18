@@ -63,7 +63,10 @@ def receive_image():
             # Read the saved image
             image_path = 'received_image.jpg'
 
-            # Render the HTML template with the image path and an empty result
-            return render_template('predict.html', image_path=image_path, result=None)
+            # Make prediction
+            result = model_predict(image_path, model)
+
+            # Return the path to the saved image and the prediction result
+            return render_template('predict.html', image_path=image_path, result=result)
         except Exception as e:
             return jsonify({'error': f'Failed to retrieve image: {str(e)}'}), 500
