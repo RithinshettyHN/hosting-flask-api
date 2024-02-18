@@ -8,14 +8,14 @@ from tensorflow.keras.preprocessing import image
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH ='tomato-model.h5'
+MODEL_PATH ='our_model.h5'
 
 # Load your trained model
 model = load_model(MODEL_PATH)
 
 def model_predict(img_path, model):
     # Make prediction
-    img = image.load_img(img_path, target_size=(224, 224))
+    img = image.load_img(img_path, target_size=(256, 256))
     x = image.img_to_array(img)
     x = x / 255.0
     x = np.expand_dims(x, axis=0)
