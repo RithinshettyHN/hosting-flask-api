@@ -1,4 +1,5 @@
 Flask
 Pillow
 Gunicorn
-tensorflow
+NumPy
+TensorFlow
