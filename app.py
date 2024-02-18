@@ -7,26 +7,26 @@ from tensorflow.keras.preprocessing import image
 
 app = Flask(__name__)
 
-# Model saved with Keras model.save()
-MODEL_PATH = 'our_model.h5'
+# # Model saved with Keras model.save()
+# MODEL_PATH = 'our_model.h5'
 
-# Load your trained model
-model = load_model(MODEL_PATH)
+# # Load your trained model
+# model = load_model(MODEL_PATH)
 
-def model_predict(img_path, model):
-    # Make prediction
-    img = image.load_img(img_path, target_size=(256, 256))
-    x = image.img_to_array(img)
-    x = x / 255.0
-    x = np.expand_dims(x, axis=0)
-    preds = model.predict(x)
-    preds = np.argmax(preds, axis=1)
+# def model_predict(img_path, model):
+#     # Make prediction
+#     img = image.load_img(img_path, target_size=(256, 256))
+#     x = image.img_to_array(img)
+#     x = x / 255.0
+#     x = np.expand_dims(x, axis=0)
+#     preds = model.predict(x)
+#     preds = np.argmax(preds, axis=1)
     
-    # Map prediction index to label
-    labels = ["Bacterial_spot", "Early_blight", "Late_blight", "Leaf_Mold", "Septoria_leaf_spot", "Spider_mites Two-spotted_spider_mite", "Target_Spot", "Tomato_Yellow_Leaf_Curl_Virus", "Tomato_mosaic_virus", "Healthy"]
-    result = labels[preds[0]]
+#     # Map prediction index to label
+#     labels = ["Bacterial_spot", "Early_blight", "Late_blight", "Leaf_Mold", "Septoria_leaf_spot", "Spider_mites Two-spotted_spider_mite", "Target_Spot", "Tomato_Yellow_Leaf_Curl_Virus", "Tomato_mosaic_virus", "Healthy"]
+#     result = labels[preds[0]]
     
-    return result
+#     return result
     
 @app.route('/')
 def hello_world():
@@ -49,7 +49,7 @@ def receive_image():
     image.save(image_path)
 
     # Make prediction
-    result = model_predict(image_path, model)
+    # result = model_predict(image_path, model)
 
     # Render the HTML template with the image path and the prediction result
-    return render_template('predict.html', image_path=image_path, result=result)
+    return render_template('predict.html', image_path=image_path)
