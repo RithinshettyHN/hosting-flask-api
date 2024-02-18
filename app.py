@@ -8,7 +8,7 @@ from tensorflow.keras.preprocessing import image
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH ='our_model.h5'
+MODEL_PATH = 'our_model.h5'
 
 # Load your trained model
 model = load_model(MODEL_PATH)
@@ -33,40 +33,23 @@ def hello_world():
     return 'Hello World'
 
 # Define the endpoint to receive images
-@app.route('/predict', methods=['POST', 'GET'])
+@app.route('/predict', methods=['POST'])
 def receive_image():
-    if request.method == 'POST':
-        try:
-            # Check if the request contains an image file
-            if 'image' not in request.files:
-                return jsonify({'error': 'No image found in request'}), 400
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image found in request'}), 400
 
-            # Get the image file from the request
-            image_file = request.files['image']
+    # Get the image file from the request
+    image_file = request.files['image']
 
-            # Convert the image file to a PIL Image object
-            image = Image.open(io.BytesIO(image_file.read()))
+    # Convert the image file to a PIL Image object
+    image = Image.open(io.BytesIO(image_file.read()))
 
-            # Save the image temporarily
-            image_path = 'received_image.jpg'
-            image.save(image_path)
+    # Save the image temporarily
+    image_path = 'received_image.jpg'
+    image.save(image_path)
 
-            # Make prediction
-            result = model_predict(image_path, model)
+    # Make prediction
+    result = model_predict(image_path, model)
 
-            # Return the path to the saved image and the prediction result
-            return render_template('predict.html', image_path=image_path, result=result)
-        except Exception as e:
-            return jsonify({'error': f'Failed to process image: {str(e)}'}), 500
-    elif request.method == 'GET':
-        try:
-            # Read the saved image
-            image_path = 'received_image.jpg'
-
-            # Make prediction
-            result = model_predict(image_path, model)
-
-            # Return the path to the saved image and the prediction result
-            return render_template('predict.html', image_path=image_path, result=result)
-        except Exception as e:
-            return jsonify({'error': f'Failed to retrieve image: {str(e)}'}), 500
+    # Render the HTML template with the image path and the prediction result
+    return render_template('predict.html', image_path=image_path, result=result)
