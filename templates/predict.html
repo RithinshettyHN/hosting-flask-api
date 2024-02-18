@@ -1,1 +1,22 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+</head>
+<body>
+    <h1>Image Prediction Result</h1>
+    {% if image_path %}
+        <img src="{{ image_path }}" alt="Uploaded Image">
+    {% else %}
+        <p>No image uploaded</p>
+    {% endif %}
+    <br>
+    {% if result %}
+        <h2>Predicted Disease: {{ result }}</h2>
+    {% else %}
+        <p>No prediction available</p>
+    {% endif %}
+</body>
+</html>
